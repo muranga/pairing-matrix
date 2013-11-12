@@ -32,39 +32,13 @@
     <section class="bck darkest landing text center color white">
     <div class="row">
         <div class="column_10 offset_1">
-            <h3 data-bind="text: names"></h3>
-            <table >
-                <thead>
-                    <tr data-bind="foreach: names">
-                        <td data-bind="text: $data"></td>
-                    </tr>
-
-                </thead>
-                <tbody data-bind="foreach :names" >
-                    <tr>
-                        <td data-bind="text: $data"></td>
-                    </tr>
-
-                </tbody>
-            </table>
-            <table data-bind="foreach: commits">
-                <tr>
-                    <td>
-                        <img width="50" height="50"
-                        data-bind="attr:{src:data.author.avatar_url,alt:data.commit.author.name}"
-                        />
-                    </td>
-                    <td data-bind="text: data.commit.message"></td>
-                    <td data-bind="text: pairs"></td>
-                </tr>
-            </table>
 
 
         </div>
     </div>
     </section>
 
-    <script type="text/javascript" src="js/gh3.js"></script>
+    <script type="text/javascript" src="js/matrix.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/underscore.js"></script>
     <script type="text/javascript" src="js/knockout.js"></script>
