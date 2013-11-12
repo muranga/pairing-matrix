@@ -28,14 +28,18 @@ var commitModel = function(commit){
 };
 ko.applyBindings(view);
 jQuery(document).ready(function(){
-    jQuery.getJSON("https://api.github.com/repos/unicefuganda/ureport/commits?since=2012-11-01",function(data){
-        for (var i=0;i<data.length;i++){
+    _.each(["1","2","3","4","5","6","7","8","9"],function(page){
+        jQuery.getJSON("https://api.github.com/repos/unicefuganda/ureport/commits?since=2012-11-01&page="+page+"&per_page=1000",function(data){
+            console.log(data.length," commits");
+            for (var i=0;i<data.length;i++){
 
-            if(data[i].commit.message.substring(0, "[".length) === "["){
-                view.commits.push(commitModel(data[i]));
+                if(data[i].commit.message.substring(0, "[".length) === "["){
+                    view.commits.push(commitModel(data[i]));
 
+                }
             }
-        }
+        });
+
     });
 });
 
