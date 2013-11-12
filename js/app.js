@@ -7,6 +7,10 @@ var ViewModel = function() {
     this.matrix = ko.observable("JJJJJ");
     this.username = ko.observable("unicefuganda");
     this.repository = ko.observable("ureport");
+	var self=this;
+	this.url = ko.computed(function() {
+	        return "https://github.com/"+self.username() + "/" + self.repository();
+	    });
 
 };
 var member = function(name) {
