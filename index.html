@@ -23,7 +23,7 @@
     <header class="bck margin-top margin-bottom">
     <div class="row">
         <div class="column_6">
-            <h2 class="text italic thin">UREPORT</h2>
+            <h2 class="text italic thin" data-bind="text: repository"></h2>
         </div>
     </div>
     </header>
@@ -31,7 +31,15 @@
     <section class="bck darkest landing text center color white">
     <div class="row">
         <div class="column_10 offset_1">
-			
+	<form action="" method="get" >
+		
+			<label >Github Username</label>
+			<input type="text" name="username" data-bind="value: username" value="" >
+			<label >Github Repository</label>
+			<input type="text" name="username" data-bind="value: repository" value="" >
+
+	</form>
+		
 			<div class="matrix">
 				
 			</div>

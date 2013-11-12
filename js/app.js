@@ -5,6 +5,8 @@ var ViewModel = function() {
     this.pairs = ko.observableArray([]);
     this.names = ko.observableArray([]);
     this.matrix = ko.observable("JJJJJ");
+    this.username = ko.observable("unicefuganda");
+    this.repository = ko.observable("ureport");
 
 };
 var member = function(name) {
@@ -14,14 +16,6 @@ view = new ViewModel();
 var namesDump = Array();
 var commitModel = function(commit) {
     this.data = commit;
-    this.pic = "http://placehold.it/50x50";
-    this.name = "author";
-    if (commit.author.avatar_url) {
-        this.pic = commit.author.avatar_url;
-    }
-    if (commit.author.name) {
-        this.name = commit.author.name;
-    }
     this.message = "";
     if (commit.commit.message) {
         this.message = commit.commit.message;
@@ -38,40 +32,54 @@ var commitModel = function(commit) {
     view.matrix(window.matrix.table);
 };
 ko.applyBindings(view);
+
 jQuery(document).ready(function() {
-
-    jQuery.getJSON("https://api.github.com/repos/unicefuganda/ureport/commits?since=2012-11-01&page=1&per_page=100",
-    function(data) {
-        // console.log(data.length," commits");
-        for (var i = 0; i < data.length; i++) {
-
-            if (data[i].commit.message.substring(0, "[".length) === "[") {
-                view.commits.push(commitModel(data[i]));
-
-            }
-        }
-    });
-
+    getCommits();
 
 });
+var loadData = function(data) {
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].commit.message.substring(0, "[".length) === "[") {
+            view.commits.push(commitModel(data[i]));
+        }
+    }
+};
+var getCommits = function() {
+    username = view.username();
+    repository = view.repository();
+    jQuery.getJSON("https://api.github.com/repos/" + username + "/" + repository + "/commits?since=2012-11-01&page=1&per_page=100",
+    loadData);
 
+}
 view.matrix.subscribe(function(data) {
     plot(data);
 
 });
+view.username.subscribe(function(data) {
+    window.matrix.table = [];
+    view.matrix(window.matrix.table);
+    getCommits();
 
+});
+view.repository.subscribe(function(data) {
+    window.matrix.table = [];
+    view.matrix(window.matrix.table);
+    getCommits();
+
+});
 var plot = function(data) {
 
     $(".matrix").html(" ");
     var rows = d3.select(".matrix").append('table').selectAll("tr")
     .data(data)
     .enter().append("tr");
-   	
-	rows.append("td").text(function(d){return d.key;});
-	
+
+    rows.append("td").text(function(d) {
+        return d.key;
+    });
+
     var lines = rows.selectAll("tr")
     .data(function(d) {
-        console.log(d);
         return d.value
     });
 
