@@ -1,22 +1,21 @@
 var Matrix= function(){
 
-    this.table ={};	
+    this.table =[];	
     this.parsePoint= function(leader,latter){
-        if (!(leader in this.table))
+     
+		var intable = _.find(this.table, function(item){ return item.key === leader; });
+		console.log(intable);
+		if(!intable)
         {
-            data ={};
-            data[latter]=1
-                this.table[leader]=[data] 
+				this.table.push({"key":leader,value:[{"key":latter,value:1}]})
         }else{
-            var searchResult = _.find(this.table[leader], function(item){ return latter in item; });
+            var searchResult = _.find(intable.value, function(item){ return item.key === latter });
             if (searchResult){
-                var selectedIndex = _.indexOf(this.table[leader], searchResult); 
-                searchResult[latter] =  searchResult[latter]+1;
-                this.table[leader][selectedIndex] = searchResult;
+                var selectedIndex = _.indexOf(intable.value, searchResult); 
+                searchResult["value"] =  searchResult["value"]+1;
+                intable.value[selectedIndex] = searchResult;
             }else{
-                data ={};
-                data[latter]=1;
-                this.table[leader].push(data); 
+				this.table.push({"key":leader,value:[{"key":latter,value:1}]})
             }
         }  
     };
@@ -39,4 +38,6 @@ var Matrix= function(){
     this.parseArray= function(args){
         this.addDataPoint.apply(this,args);
     };
+	 
+	
 };
