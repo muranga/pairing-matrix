@@ -33,7 +33,7 @@ var commitModel = function(commit) {
         cleanedNames.push(cleanedName);
     });
     window.matrix.parseArray(cleanedNames);
-    view.matrix(window.matrix.table);
+    view.matrix(window.matrix.toArray());
 };
 ko.applyBindings(view);
 
@@ -61,13 +61,13 @@ view.matrix.subscribe(function(data) {
 });
 view.username.subscribe(function(data) {
     window.matrix.table = [];
-    view.matrix(window.matrix.table);
+    view.matrix(window.matrix.toArray());
     getCommits();
 
 });
 view.repository.subscribe(function(data) {
     window.matrix.table = [];
-    view.matrix(window.matrix.table);
+    view.matrix(window.matrix.toArray());
     getCommits();
 
 });
@@ -78,18 +78,18 @@ var plot = function(data) {
     .data(data)
     .enter().append("tr");
 
-    rows.append("td").text(function(d) {
-        return d.key;
-    });
+    // rows.append("td").text(function(d) {
+//         return d;
+//     });
 
     var lines = rows.selectAll("tr")
     .data(function(d) {
-        return d.value
+        return d
     });
 
     lines.enter().append("td")
     .text(function(d, i) {
-        return d.key + " -- " + d.value;
+        return d;
     });
 
     lines.exit().remove();

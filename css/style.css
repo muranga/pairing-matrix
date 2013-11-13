@@ -3,3 +3,7 @@
      -moz-box-sizing: border-box; /* Firefox 1+ */
           box-sizing: border-box; /* Chrome, IE8+, Opera, Safari 5.1*/
 }
+
+td{
+	border: 1px solid gray;
+}
